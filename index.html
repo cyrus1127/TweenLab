@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/jquery-1.9.1.min.js" ></script>
+        <script src="js/jquery.lettering-0.6.1.min.js" ></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.6/TweenMax.min.js"></script>
+        <script src="js/jquery.superscrollorama.js" ></script>
+        <link href='http://fonts.googleapis.com/css?family=Joti+One' rel='stylesheet' type='text/css'>
+        <style>
+            body{ 
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            
+            #siteBG
+            {
+                position: relative;
+                width: 100%;
+                height: 3000px;
+                /*background-image: url("images/background.png");*/
+                background-color: black;
+                top: 0px;
+                left : 0px;
+            }
+            
+            h2
+            {
+                color:white;
+                font-family : 'Joti One';
+                font-size: 100px;
+                position: relative;
+                padding: 0;
+                margin: 0;
+                /*text-transform: uppercase;*/
+            }
+            h1
+            {
+                color:white;
+                font-family : 'Joti One';
+                font-size: 120px;
+                position: relative;
+                padding: 0;
+                margin: 0;
+                text-transform: uppercase;
+            }
+            
+            #t_whats
+            {
+                left: 100px;
+                top: 50px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="siteBG" >
+            <h1 id='t_whats'>whats</h1>
+            <h2 id='t_going'>going</h2>
+            <h2 id='t_on'>on</h2>
+        </div>
+        <!--<img id="t_bg" src="images/background.png" >-->
+        
+        
+        <script>
+            $(document).ready(function() {
+		var controller = $.superscrollorama({
+			triggerAtCenter: false,
+			playoutAnimations: true
+		});
+                
+                var text_1 = '#t_whats';
+                var text_2 = '#t_going';
+                
+                controller.addTween(text_1, TweenMax.from($(text_1), 1.5, {css:{opacity:0}}));
+                
+                controller.addTween(text_2,TweenMax.to( $(text_2),1,{css:{left:"800px"}} ));
+            });
+        </script>
+    </body>
+</html>
