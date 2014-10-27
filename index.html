@@ -1,93 +1,127 @@
-<!DOCTYPE html>
+<!DOCSITE html>
 <html>
     <head>
-        
-<!--        Fonts-->
-        <link href='http://fonts.googleapis.com/css?family=Bubblegum+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <script src='js/greensock/TimelineMax.min.js'></script>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js'></script>
         <script src="js/jquery-1.9.1.min.js" ></script>
-        <style>
-            body{
-                background: darkblue;
-                padding: 0;
-                margin: 0;
-                width: 100%;
-                height: 100%;
-            }
-            
-            .autoCenter
-            {
-                margin-left:auto; 
-                margin-right:auto;
-            }
-            
-            a{ color:white; text-decoration: none; }
-            
-            .inhidden{ opacity: 0 }
-            
-        </style>
     </head>
-    <body>
-        <table  class="autoCenter" style=" display:table; table-layout:fixed;  width:700px;">
-            <tr><th>
-                    <p id="PageHead" style=" margin:25px; text-align:center; font-size:60px; color:white; font-family: 'Bubblegum Sans', cursive; " >Headline</p>
-            </th></tr>
-        </table>
-        <table  class="autoCenter" id="pageNavigationControler" style=" display:table; table-layout:fixed; width:700px; color:white; text-align:center;">
-            <tr>
-                <th><div id="tab_about" onclick="listStretch(this.id)" >About</div></th>
-                <th><div id="tab_gallery" onclick="listStretch(this.id)" >Gallery</div></th>
-                <th><div id="tab_contact" onclick="listStretch(this.id)" >Contact</div></th>
-            </tr>
-            <tr style="vertical-align: text-top; " >
-                <td  >
-                    <div class="inhidden" id="about-list">
-                        <p>What</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="inhidden"  id="gallery-list">
-                        <p>Picture</p>
-                        <p>Video</p>
-                        <p>Draw</p>
-                        <p>HTML</p>
-                        <p>E-Motion</p>
-                    </div>
-                </td>
-                <td><div class="inhidden"  id="contact-list"></div></td>
-            </tr>
-        </table>
+    <style>
+        body{ background-color:rgb(110, 6, 51); width:100%; height:100%; margin:0; padding:0; overflow: hidden; }
         
+        #C-S { position: absolute; width:100%; height:1px; background: #2ff865; top:10px;  }
+        #C-E { position: relative; margin-left: 20px; margin-right: 20px; width:1px; height:100%; background-color: #ffcb1e; float:left;}
+        .note{ position: relative; width:10px; height: 10px; background: #2ff865; top:-5px; left:-5px; }
+        .note:hover{ left:-15px; width:70px; }
+        .note.type1{ background: #1ec2ff; }
+        .note.type2{ background: #ff1ec2; }
+        .note.type3{ background: #ffcb1e; }
+
+        #showBoard{ position: absolute; top:100px; right:100px; background-color: grey; width:200px; height: 200px;}
+
+
+        div#playBoard{ position: absolute; top:0px; bottom:auto; width: 100%; height:100%; border: solid 1px; background-color: rgba(56, 92, 108, 0);}
+        #PlayBoard .freeChild{ position: absolute; }
+        div .ele_bock{ position: absolute; background-color: yellow; top:50%; left:50%; width:10px; height: 10px; opacity: 0.5; }
+
+/*Text style*/
+        #inText{ position:absolute; font-size:80px; text-align:center; font-family: 'Lobster', cursive; color:rgb(93, 131, 61); padding-top:15px; }
+        ::-moz-selection { /* Code for Firefox */ color: red; background: rgba(255, 255, 0, 0); }
+        ::selection { color: red; background: rgba(255, 255, 0, 0); }
+
+
+
+    </style>
+    <body style="" onclick="startAnim()">
+
+        <div id="playBoard"  >
+<!--            <div id="inText" style="">Dont Press</div>-->
+            <img src="images/Hill/mthood.svg" class="freechild" style="width:80%; left:0%; bottom:10%;"/>
+            <img src="images/Hill/mthood.svg" class="freechild" style="width:50%; left:40%; bottom:23%;"/>
+            <img src="images/Hill/mthood.svg" class="freechild" style="width:40%; left:4%; bottom:3%; transform: scaleX(-1);"/>
+            <img src="images/Hill/mthood.svg" class="freechild" style="width:40%; right:4%; bottom:3%; transform: scaleX(-1);"/>
+            <img src="images/Hill/mthood.svg" class="freechild" style="width:25%; right:4%; bottom:17%;"/>
+            <img src="images/tree/black-tree-branch-hi.png" class="freechild" style="width:10%; left:10%; bottom:0%;" />
+            <img src="images/tree/spring-branch-edit-3-hi.png" class="freechild" style="width:10%; right:20%; bottom:0%; transform: scaleX(-1);" />
+            <img src="images/tree/spring-branch-edit-3-hi.png" class="freechild" style="width:15%; right:1%; bottom:-4%; transform: scaleX(-1) rotate(30deg); " />
+            <img src="images/tree/swirl-branch-with-red-berries-hi.png" class="freechild" style="width:12%; right:0%; bottom:43%; transform: scaleX(-1) rotate(-18deg);" />
+            <img src="images/tree/swirl-branch-with-red-berries-hi.png" class="freechild" style="width:15%; right:0%; bottom:35%; transform: scaleX(-1) rotate(18deg);" />
+            <img src="images/tree/swirl-branch-with-red-berries-hi.png" class="freechild" style="width:18%; right:0%; bottom:40%; transform: scaleX(-1);" />
+            
+        </div>
+
+        <div id="C-S">
+            <div id="text"></div>
+            <div id="a_0001" class="note" onmouseover="noteOver(this)" style="left:10%;"></div>
+        </div>
+        <div id="C-E">
+            <div class="note type3" style="top:15%;"></div>
+            <div class="note type3" style="top:24%;"></div>
+            <div class="note type3" style="top:60%;"></div>
+            <div class="note type3" style="top:3%;"></div>
+            <div class="note type3" style="top:15%;"></div>
+            <div class="note type3" style="top:24%;"></div>
+            <div class="note type3" style="top:60%;"></div>
+            <div class="note type3" style="top:3%;"></div>
+            <div class="note type3" style="top:15%;"></div>
+            <div class="note type3" style="top:24%;"></div>
+            <div class="note type3" style="top:60%;"></div>
+            <div class="note type3" style="top:3%;"></div>
+            <div class="note type3" style="top:15%;"></div>
+            <div class="note type3" style="top:24%;"></div>
+            <div class="note type3" style="top:60%;"></div>
+            <div class="note type3" style="top:3%;"></div>
+        </div>
+
+
+
         <script>
-            
-            var listStretch = function( tab ){
-                
-                var name = tab.split("_")[1] + "-list" ;
-                
-                $( "#"+name ).removeClass("inhidden");
-                switch( name )
-                {
-                    case "about-list" : 
-                        if( !$( "#gallery-list" ).is("inhidden") ) $( "#gallery-list" ).addClass( "inhidden" );
-                        if( !$( "#contact-list" ).is("inhidden") ) $( "#contact-list" ).addClass( "inhidden" );
-                        break;
-                    case "gallery-list" : 
-                        if( !$( "#about-list" ).is("inhidden") ) $( "#about-list" ).addClass( "inhidden" );
-                        if( !$( "#contact-list" ).is("inhidden") ) $( "#contact-list" ).addClass( "inhidden" );
-                        
-                        break;
-                    case "contact-list" : 
-                        if( !$( "#about-list" ).is("inhidden") ) $( "#about-list" ).addClass( "inhidden" );
-                        if( !$( "#gallery-list" ).is("inhidden") ) $( "#gallery-list" ).addClass( "inhidden" );
-                        break;
-                }
-            }
-            
+
+            var isDocReady = false;
             $(document).ready(function(){
-                console.log("Document is readied !!");
+                isDocReady = true;
             });
+
+            var showboard = $("#showBoard");
+            var myboard = $("#playBoard");
+            var bock = '<div class="ele_bock"></div>';
+
+            function setPageTitle(){
+
+            };
             
+            function getWinSize(){
+                var out = { x : Math.floor( myboard.css("width").split("px")[0] * Math.random() ),
+                            y : Math.floor( myboard.css("height").split("px")[0] * Math.random() )};
+                return out;
+            };
             
+            var startAnim = function(){
+
+                if( !isDocReady ) return;
+
+                //add bock
+                var bock_1 = $( bock ).appendTo( myboard );
+                //play anim with tween
+                var tween = TweenMax.to( bock_1
+                                        , 5
+                                        , {   top: getWinSize().y+"px"
+                                            , left: getWinSize().x+"px"
+                                            , width: 1+"px" , height: 1+"px"
+                                            , onComplete:bockAnimEnd  //after anim finished
+                                            , onCompleteParams:[bock_1] } );
+            };
+
+            //remove bock
+            var bockAnimEnd = function( obj )
+            {
+                obj.remove();
+                startAnim();
+            }
+
+            var noteOver = function(obj){
+                if( !isDocReady ) return;
+            }
+
         </script>
     </body>
 </html>

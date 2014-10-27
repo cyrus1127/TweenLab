@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+<!--        Fonts-->
+        <link href='http://fonts.googleapis.com/css?family=Bubblegum+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <script src='js/greensock/TimelineMax.min.js'></script>
+        <script src="js/jquery-1.9.1.min.js" ></script>
+        <style>
+            body{
+                background: darkblue;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .autoCenter
+            {
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+            a{ color:white; text-decoration: none; }
+
+            .inhidden{ opacity: 0 }
+
+        </style>
+    </head>
+    <body>
+        <table  class="autoCenter" style=" display:table; table-layout:fixed;  width:700px;">
+            <tr><th>
+                    <p id="PageHead" style=" margin:25px; text-align:center; font-size:60px; color:white; font-family: 'Bubblegum Sans', cursive; " >Headline</p>
+            </th></tr>
+        </table>
+        <table  class="autoCenter" id="pageNavigationControler" style=" display:table; table-layout:fixed; width:700px; color:white; text-align:center;">
+            <tr>
+                <th><div id="tab_about" onclick="listStretch(this.id)" >About</div></th>
+                <th><div id="tab_gallery" onclick="listStretch(this.id)" >Gallery</div></th>
+                <th><div id="tab_contact" onclick="listStretch(this.id)" >Contact</div></th>
+            </tr>
+            <tr style="vertical-align: text-top; " >
+                <td  >
+                    <div class="inhidden" id="about-list">
+                        <p>What</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="inhidden"  id="gallery-list">
+                        <p>Picture</p>
+                        <p>Video</p>
+                        <p>Draw</p>
+                        <p>HTML</p>
+                        <p>E-Motion</p>
+                    </div>
+                </td>
+                <td><div class="inhidden"  id="contact-list"></div></td>
+            </tr>
+        </table>
+
+        <script>
+
+            var listStretch = function( tab ){
+
+                var name = tab.split("_")[1] + "-list" ;
+
+                $( "#"+name ).removeClass("inhidden");
+                switch( name )
+                {
+                    case "about-list" :
+                        if( !$( "#gallery-list" ).is("inhidden") ) $( "#gallery-list" ).addClass( "inhidden" );
+                        if( !$( "#contact-list" ).is("inhidden") ) $( "#contact-list" ).addClass( "inhidden" );
+                        break;
+                    case "gallery-list" :
+                        if( !$( "#about-list" ).is("inhidden") ) $( "#about-list" ).addClass( "inhidden" );
+                        if( !$( "#contact-list" ).is("inhidden") ) $( "#contact-list" ).addClass( "inhidden" );
+
+                        break;
+                    case "contact-list" :
+                        if( !$( "#about-list" ).is("inhidden") ) $( "#about-list" ).addClass( "inhidden" );
+                        if( !$( "#gallery-list" ).is("inhidden") ) $( "#gallery-list" ).addClass( "inhidden" );
+                        break;
+                }
+            }
+
+            $(document).ready(function(){
+                console.log("Document is readied !!");
+            });
+
+
+        </script>
+    </body>
+</html>
